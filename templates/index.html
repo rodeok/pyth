@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Downloader</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+    function showLoader() {
+      document.getElementById("loader").style.display = "flex";
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>🌐 Image Downloader</h1>
+    <form method="POST" onsubmit="showLoader()">
+      <input type="text" name="url" placeholder="Paste website link here..." required>
+      <button type="submit">Fetch Images</button>
+    </form>
+    
+    <!-- Loader -->
+    <div id="loader" class="loader" style="display:none;">
+      <div class="spinner"></div>
+      <p>Fetching images...</p>
+    </div>
+
+    {% if message %}
+      <p class="message">{{ message }}</p>
+    {% endif %}
+
+    {% if images %}
+      <h2>Images from Website</h2>
+      <div class="gallery">
+        {% for img_url in images %}
+          <div class="card">
+            <img src="{{ img_url }}" alt="image">
+            <a class="single-download" href="{{ img_url }}" download>Download</a>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
